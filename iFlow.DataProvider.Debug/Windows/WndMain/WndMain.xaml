@@ -1,0 +1,88 @@
+﻿<Window x:Class="iFlow.DataProvider.WndMain"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:iFlow.DataProvider"
+        mc:Ignorable="d"
+		d:DataContext="{d:DesignInstance local:VmMain}"
+        Title="MainWindow" Height="600" Width="800" Closed="Window_Closed">
+    <Window.Resources>
+        <Style TargetType="{x:Type local:WndMain}" BasedOn="{StaticResource {x:Type Window}}"/>
+    </Window.Resources>
+
+    <TabControl>
+        <TabItem Header="События">
+            <Grid Style="{StaticResource MainGrid}" ShowGridLines="True">
+                <TextBox TextWrapping="Wrap" VerticalScrollBarVisibility="Auto" Text="{Binding Log, Mode=OneWay}"/>
+            </Grid>
+        </TabItem>
+        <TabItem Header="Значения">
+            <ScrollViewer VerticalScrollBarVisibility="Auto">
+                <ItemsControl ItemsSource="{Binding VmTags}" Grid.IsSharedSizeScope="True">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <StackPanel/>
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Grid>
+                                <Grid.Resources>
+                                    <DataTemplate DataType="{x:Type local:VmBoolTag}">
+                                        <CheckBox IsChecked="{Binding Value,UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource GridCheckBox}" 
+										  IsEnabled="{Binding IsRandom,Converter={StaticResource BoolInverse}}"/>
+                                    </DataTemplate>
+                                    <DataTemplate DataType="{x:Type local:VmIntTag}">
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="Auto" SharedSizeGroup="Value"/>
+                                                <ColumnDefinition/>
+                                            </Grid.ColumnDefinitions>
+                                            <TextBox Grid.Column="0" Text="{Binding Value,UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource GridNumberBox}" 
+											 IsEnabled="{Binding IsRandom,Converter={StaticResource BoolInverse}}"/>
+                                            <StackPanel Grid.Column="1" Orientation="Horizontal" Visibility="{Binding IsRandom,Converter={StaticResource BoolToVis}}">
+                                                <TextBox Text="{Binding MinValue}" Style="{StaticResource GridNumberBox}"/>
+                                                <TextBox Text="{Binding MaxValue}" Style="{StaticResource GridNumberBox}"/>
+                                            </StackPanel>
+                                        </Grid>
+                                    </DataTemplate>
+                                    <DataTemplate DataType="{x:Type local:VmFloatTag}">
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="Auto" SharedSizeGroup="Value"/>
+                                                <ColumnDefinition/>
+                                            </Grid.ColumnDefinitions>
+                                            <TextBox Grid.Column="0" Text="{Binding Value,UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource GridNumberBox}" 
+											 IsEnabled="{Binding IsRandom,Converter={StaticResource BoolInverse}}"/>
+                                            <StackPanel Grid.Column="1" Orientation="Horizontal" Visibility="{Binding IsRandom,Converter={StaticResource BoolToVis}}">
+                                                <TextBox Text="{Binding MinValue}" Style="{StaticResource GridNumberBox}"/>
+                                                <TextBox Text="{Binding MaxValue}" Style="{StaticResource GridNumberBox}"/>
+                                            </StackPanel>
+                                        </Grid>
+                                    </DataTemplate>
+                                    <DataTemplate DataType="{x:Type local:VmStringTag}">
+                                        <TextBox Text="{Binding Value,UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource GridTextBox}" 
+											 IsEnabled="{Binding IsRandom,Converter={StaticResource BoolInverse}}"/>
+                                    </DataTemplate>
+                                </Grid.Resources>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="40" SharedSizeGroup="Index" />
+                                    <ColumnDefinition Width="Auto" SharedSizeGroup="Name"/>
+                                    <ColumnDefinition Width="Auto" SharedSizeGroup="Type"/>
+                                    <ColumnDefinition Width="20" SharedSizeGroup="IsRandom"/>
+                                    <ColumnDefinition/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Grid.Column="0" Style="{StaticResource GridTextBlock}" Text="{Binding Index}" HorizontalAlignment="Right"/>
+                                <TextBlock Grid.Column="1" Style="{StaticResource GridTextBlock}" Text="{Binding Tag.Name}"/>
+                                <TextBlock Grid.Column="2" Style="{StaticResource GridTextBlock}" Text="{Binding Tag.Type.Name}"/>
+                                <CheckBox Grid.Column="3" IsChecked="{Binding IsRandom}" Style="{StaticResource GridCheckBox}"/>
+                                <ContentPresenter Grid.Column="4" Content="{Binding}"/>
+                            </Grid>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </ScrollViewer>
+        </TabItem>
+    </TabControl>
+</Window>

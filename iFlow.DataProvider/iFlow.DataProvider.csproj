@@ -1,0 +1,101 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{E1E0D03A-A420-4069-B013-87F043A1FE09}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>iFlow.DataProvider</RootNamespace>
+    <AssemblyName>iFlow.DataProvider</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\..\Version.cs">
+      <Link>Properties\Version.cs</Link>
+    </Compile>
+    <Compile Include="Classes\NameUid.cs" />
+    <Compile Include="Classes\ProtocolLoader.cs" />
+    <Compile Include="DataProvider.cs" />
+    <Compile Include="Module.cs" />
+    <Compile Include="Params\Config.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Common\iFlow.Interfaces\iFlow.Interfaces.csproj">
+      <Project>{2e848f26-0d9f-4c9d-8a58-7d69acefa887}</Project>
+      <Name>iFlow.Interfaces</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Common\iFlow.Utils\iFlow.Utils.csproj">
+      <Project>{e37c391c-47e4-4a6e-bb12-102921bf9077}</Project>
+      <Name>iFlow.Utils</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>cd $(TargetDir)
+rmdir iFlow.DataProtocols.Opc
+mkdir iFlow.DataProtocols.Opc
+rmdir iFlow.DataProtocols.FakeOpc
+mkdir iFlow.DataProtocols.FakeOpc
+cd $(ProjectDir)..\..\..
+start /B /Wait BuildsTemplates\CopyFiles.bat $(TargetDir) Builds\iFlow.Services\$(TargetName)\ 
+rem start /B /Wait BuildsTemplates\CopyFiles.bat $(TargetDir)iFlow.DataProtocols.Opc\ Builds\iFlow.Services\$(TargetName)\iFlow.DataProtocols.Opc\
+copy $(ProjectDir)..\iFlow.DataProtocols.Opc\bin\Debug\*.dll $(TargetDir)iFlow.DataProtocols.Opc
+copy $(ProjectDir)..\iFlow.DataProtocols.Opc\bin\Debug\*.pdb $(TargetDir)iFlow.DataProtocols.Opc
+copy $(ProjectDir)..\iFlow.DataProtocols.Opc\bin\Debug\Opc.xml $(TargetDir)iFlow.DataProtocols.Opc
+copy $(ProjectDir)..\iFlow.DataProtocols.FakeOpc\bin\Debug\*.dll $(TargetDir)iFlow.DataProtocols.FakeOpc
+copy $(ProjectDir)..\iFlow.DataProtocols.FakeOpc\bin\Debug\*.pdb $(TargetDir)iFlow.DataProtocols.FakeOpc
+copy $(ProjectDir)..\iFlow.DataProtocols.FakeOpc\bin\Debug\Opc.xml $(TargetDir)iFlow.DataProtocols.FakeOpc
+copy $(ProjectDir)..\iFlow.DataProtocols.Abstract\bin\Debug\iFlow.DataProtocols.Abstract.* $(TargetDir)
+
+cd $(ProjectDir)..\..\..\Builds\iFlow.Services\$(TargetName)
+mkdir iFlow.DataProtocols.Opc
+cd $(ProjectDir)..\..\..
+start /B /Wait BuildsTemplates\CopyFiles.bat $(ProjectDir)..\iFlow.DataProtocols.Opc\bin\Debug\ Builds\iFlow.Services\$(TargetName)\iFlow.DataProtocols.Opc
+
+Exit 0</PostBuildEvent>
+  </PropertyGroup>
+  <PropertyGroup>
+    <PreBuildEvent>sc stop iFlow.DataProvider
+Exit 0</PreBuildEvent>
+  </PropertyGroup>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

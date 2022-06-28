@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="Config" nillable="true" type="Config" />
+  <xs:complexType name="Config">
+    <xs:complexContent mixed="false">
+      <xs:extension base="CustomConfig">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="1" name="Address" type="xs:string" />
+          <xs:element minOccurs="1" maxOccurs="1" name="Port" nillable="true" type="xs:unsignedShort" />
+          <xs:element minOccurs="0" maxOccurs="1" name="UserName" type="xs:string" />
+          <xs:element minOccurs="0" maxOccurs="1" name="Password" type="xs:string" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="CustomConfig">
+    <xs:complexContent mixed="false">
+      <xs:extension base="AbstractConfig">
+        <xs:sequence>
+          <xs:element minOccurs="1" maxOccurs="1" name="UpdateRate" nillable="true" type="TimeSpan" />
+          <xs:element minOccurs="1" maxOccurs="1" name="Deadband" nillable="true" type="xs:float" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="AbstractConfig" abstract="true" />
+  <xs:complexType name="TimeSpan" />
+</xs:schema>

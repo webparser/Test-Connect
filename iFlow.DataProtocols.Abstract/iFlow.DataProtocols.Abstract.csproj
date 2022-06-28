@@ -1,0 +1,93 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{FB4599E5-B902-4204-920B-713A824328DC}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>iFlow.DataProtocols</RootNamespace>
+    <AssemblyName>iFlow.DataProtocols.Abstract</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <LangVersion>7.2</LangVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Net.FtpClient, Version=1.0.5824.34026, Culture=neutral, PublicKeyToken=fa4be07daa57c2b7, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\System.Net.FtpClient.1.0.5824.34026\lib\net40\System.Net.FtpClient.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\..\Version.cs">
+      <Link>Properties\Version.cs</Link>
+    </Compile>
+    <Compile Include="Classes\AbstractDataProtocol.cs" />
+    <Compile Include="Classes\AbstractDataSource.cs" />
+    <Compile Include="Classes\Historical\AbstractHistoricalData.cs" />
+    <Compile Include="Classes\Historical\AbstractHistoricalSubscription.cs" />
+    <Compile Include="Classes\Historical\CustomHistoricalData.cs" />
+    <Compile Include="Classes\Meta\AbstractMetaData.cs" />
+    <Compile Include="Classes\Realtime\AbstractRealtimeData.cs" />
+    <Compile Include="Classes\Realtime\CustomRealtimeData.cs" />
+    <Compile Include="Classes\Historical\CustomHistoricalSubscription.cs" />
+    <Compile Include="Ftp\FtpClient.cs" />
+    <Compile Include="Ftp\FtpFileInfo.cs" />
+    <Compile Include="Ftp\ServerFeatures.cs" />
+    <Compile Include="Ftp\Speedometer.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Classes\Realtime\AbstractRealtimeSubscription.cs" />
+    <Compile Include="Classes\Realtime\CustomRealtimeSubscription.cs" />
+    <Compile Include="Tags\HistoricalTagState.cs" />
+    <Compile Include="Tags\RealtimeTagState.cs" />
+    <Compile Include="Tags\DataTag.cs" />
+    <Compile Include="Tags\TagAddress.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Common\iFlow.Interfaces\iFlow.Interfaces.csproj">
+      <Project>{2e848f26-0d9f-4c9d-8a58-7d69acefa887}</Project>
+      <Name>iFlow.Interfaces</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Common\iFlow.Utils\iFlow.Utils.csproj">
+      <Project>{e37c391c-47e4-4a6e-bb12-102921bf9077}</Project>
+      <Name>iFlow.Utils</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

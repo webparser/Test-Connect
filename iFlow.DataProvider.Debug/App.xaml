@@ -1,0 +1,14 @@
+﻿<Application x:Class="iFlow.DataProvider.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:iFlow.DataProvider"
+             StartupUri="Windows\WndApplication\WndApplication.xaml" DispatcherUnhandledException="Application_DispatcherUnhandledException">
+    <Application.Resources>
+		<ResourceDictionary>
+			<ResourceDictionary.MergedDictionaries>
+				<!--<ResourceDictionary Source="Themes/Generic.xaml"/>-->
+				<ResourceDictionary Source="/iFlow.Wpf;component/Themes/Generic.xaml"/>
+			</ResourceDictionary.MergedDictionaries>
+		</ResourceDictionary>
+    </Application.Resources>
+</Application>
